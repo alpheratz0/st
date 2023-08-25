@@ -59,6 +59,7 @@ static void zoom(const Arg *);
 static void zoomabs(const Arg *);
 static void zoomreset(const Arg *);
 static void ttysend(const Arg *);
+static void togglecrt(const Arg *);
 
 /* config.h for applying patches and the configuration. */
 #include "config.h"
@@ -93,7 +94,7 @@ typedef struct {
 	Window win;
 	Drawable buf;
 	GlyphFontSpec *specbuf; /* font spec buffer used for rendering */
-	Atom xembed, wmdeletewin, netwmname, netwmiconname, netwmpid;
+	Atom xembed, wmdeletewin, netwmname, netwmiconname, netwmpid, crt;
 	struct {
 		XIM xim;
 		XIC xic;
@@ -245,6 +246,9 @@ static char *usedfont = NULL;
 static double usedfontsize = 0;
 static double defaultfontsize = 0;
 
+/* crt state, 1 = on, 0 = off */
+static unsigned int crt = 0;
+
 /* declared in config.h */
 extern int disablebold;
 extern int disableitalic;
@@ -334,6 +338,21 @@ void
 ttysend(const Arg *arg)
 {
 	ttywrite(arg->s, strlen(arg->s), 1);
+}
+
+void
+togglecrt(const Arg *dummy)
+{
+	Arg larg;
+	float newfontsize;
+
+	crt = 1 - crt;
+	larg.f = defaultfontsize + crt * 16;
+
+	XChangeProperty(xw.dpy, xw.win, xw.crt, XA_CARDINAL, 32,
+			PropModeReplace, (uchar *)&crt, 1);
+
+	zoomabs(&larg);
 }
 
 int
@@ -1327,6 +1346,7 @@ xinit(int cols, int rows)
 	xw.wmdeletewin = XInternAtom(xw.dpy, "WM_DELETE_WINDOW", False);
 	xw.netwmname = XInternAtom(xw.dpy, "_NET_WM_NAME", False);
 	xw.netwmiconname = XInternAtom(xw.dpy, "_NET_WM_ICON_NAME", False);
+	xw.crt = XInternAtom(xw.dpy, "_CRT", False);
 	XSetWMProtocols(xw.dpy, xw.win, &xw.wmdeletewin, 1);
 
 	xw.netwmpid = XInternAtom(xw.dpy, "_NET_WM_PID", False);
