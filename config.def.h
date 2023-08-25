@@ -6,6 +6,7 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 
+/* other fonts: Iosevka 14px, Mononoki Nerd Font 14px */
 static char *font = "Terminus:pixelsize=15:antialias=true:autohint=true";
 
 /* Spare fonts */
