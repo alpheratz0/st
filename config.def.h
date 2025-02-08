@@ -7,11 +7,11 @@
  */
 
 /* other fonts: Iosevka 14px, Mononoki Nerd Font 14px */
-static char *font = "Terminus:pixelsize=15:antialias=true:autohint=true";
+static char *font = "Terminus:pixelsize=20:antialias=true:autohint=true";
 
 /* Spare fonts */
 static char *font2[] = {
-	"Noto Color Emoji:pixelsize=10:antialias=true:autohint=true",
+	"Noto Color Emoji:pixelsize=18:antialias=true:autohint=true",
 /*	"Inconsolata for Powerline:pixelsize=12:antialias=true:autohint=true", */
 /*	"Hack Nerd Font Mono:pixelsize=11:antialias=true:autohint=true", */
 };
