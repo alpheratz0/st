@@ -7,7 +7,7 @@
  */
 
 /* other fonts: Iosevka 14px, Mononoki Nerd Font 14px */
-static char *font = "Terminus:pixelsize=20:antialias=true:autohint=true";
+static char *font = "Terminus:pixelsize=22:antialias=true:autohint=true";
 
 /* Spare fonts */
 static char *font2[] = {
